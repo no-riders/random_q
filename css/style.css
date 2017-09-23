@@ -1,0 +1,70 @@
+body {
+  position: relative;
+  height: 500px;
+}
+
+.wrapper {
+  width: 600px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 55px;
+}
+
+header h1 {
+  margin: 0;
+  margin-top: 150px;
+  font-family: 'Dosis', sans-serif;
+  font-weight: 600;
+  font-size: 55px;
+}
+
+header p, .quote_p {
+  font-family: 'Dancing Script', cursive;
+  font-size: 25px;
+  margin-top: 0;
+}
+
+header button {
+  margin: 15px 0 15px 0;
+  border: 0;
+  border-radius: 5px;
+  height: 30px;
+  width: 300px;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 5px;
+  background: darkkhaki;
+  font-family: 'Dosis', sans-serif;
+  font-weight: 600;
+}
+
+header button:focus {
+  outline: black;
+}
+article {
+  transition: all 2s ease-in;
+}
+article p {
+  transition: all 2s linear;
+  margin-bottom: 15px;
+  padding: 5px;
+  font-family: 'Dosis', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: darkslategray;
+}
+
+footer img {
+  width: 45px;
+  margin-top: 20px;
+}
+
+footer {
+  font-family: 'Dosis', sans-serif;
+  font-weight: 400;
+}
