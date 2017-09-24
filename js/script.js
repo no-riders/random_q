@@ -1,43 +1,57 @@
-const quote = document.getElementById("quote");
-const quoteP = document.getElementById("quote_p");
-const btn = document.getElementById("btn");
+//jshint esnext: true
 
-window.addEventListener("load", () => {
-  const startRequest = new XMLHttpRequest();
-  startRequest.open(
-    "GET",
-    "https://cors-anywhere.herokuapp.com/https://talaikis.com/api/quotes/random/"
-  );
-  startRequest.onload = () => {
-    const myStartData = JSON.parse(startRequest.responseText);
-    quote.style.webkitTransition = 'opacity 1s';
-    renderHTML(myStartData);
-  };
-  startRequest.send();
-});
-
-btn.addEventListener("click", () => {
-  const myRequest = new XMLHttpRequest();
-  myRequest.open(
-    "GET",
-    "https://cors-anywhere.herokuapp.com/https://talaikis.com/api/quotes/random/"
-  );
-  myRequest.onload = () => {
-    const myData = JSON.parse(myRequest.responseText);
-    renderHTML(myData);
-
+(function() {
+    const quote = document.getElementById("quote");
+    const quoteP = document.getElementById("quote_p");
+    const btn = document.getElementById("btn");
     const twitter = document.getElementById("twitter");
-    twitter.addEventListener("click", () => {
-      window.open(
-        `https://twitter.com/intent/tweet?text=${myData.quote} By ${myData.author}`
-      );
-    });
-  };
-  myRequest.send();
-  quote.value = "";
-});
+    let quoteText = '';
+    let author = '';
 
-function renderHTML(data) {
-  quote.innerHTML = `<p>"${data.quote}"</p>`;
-  quoteP.innerHTML = `by ${data.author}`;
-}
+    if (!('fetch' in window)) {
+        console.log('Fetch API is not supported by Your Browser');
+        return;
+    }
+
+    function renderHTML(data) {
+        quote.innerHTML = `<p>"${data.quote}"</p>`;
+        quoteP.innerHTML = `by ${data.author}`;
+        quoteText = data.quote;
+        author = data.author;
+    }
+
+    function onError(error) {
+        console.log('Oops, looks like an ' + error);
+    }
+
+    function validate(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+    }
+
+    function getJSON(result) {
+        return result.json();
+    }
+
+    function fetchQuote() {
+        fetch('https://cors-anywhere.herokuapp.com/https://talaikis.com/api/quotes/random/')
+            .then(validate)
+            .then(getJSON)
+            .then(renderHTML)
+            .catch(onError);
+    }
+    fetchQuote();
+
+    function twit() {
+        window.open(
+            `https://twitter.com/intent/tweet?text=${quoteText} ${author}`
+        );
+    }
+
+    btn.addEventListener('click', fetchQuote);
+
+    twitter.addEventListener('click', twit);
+
+})();
